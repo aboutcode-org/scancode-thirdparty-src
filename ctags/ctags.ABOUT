@@ -1,0 +1,14 @@
+name: ctags
+home_url: http://ctags.sourceforge.net/
+download_url: http://prdownloads.sourceforge.net/ctags/ctags-5.8.tar.gz
+version:5.7
+How to build:
+ tar -xzf ctags-5.8.tar.gz
+ cd ctags-5.8/
+ ./configure
+ make
+ The bins are in the current dir:
+ cp ctags ~/dist/scripts-7974/trunk/scripts/bin/Linux-s390x/bin/
+ 
+ url:http://prdownloads.sourceforge.net/ctags/ctags58.zip
+ 

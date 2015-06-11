@@ -1,0 +1,36 @@
+url:http://reality.sgiweb.org/davea/dwarf.html
+url:http://reality.sgiweb.org/davea/libdwarf-20081231.tar.gz
+
+note: though we use dwarfdump and not dwarfdump2 we ALWAYS rename the final exe to dwarfdump2.exe 
+ or dwarfdump2 to avoid naming conflicts on macosx: on mac dwarfdump is a standard executable provided with the base OS
+ but this is not the same one as the one we build
+
+note: since we need to install libelf to make it available for the build process of dwarfdump, 
+ it is a good idea to do that on a temp system 
+
+How to build:
+ On windows, we build under mingw (using the standard stock path for installing mysys and mingw), 
+ you must use libdwarf 20091012 or higher. 
+ Then to build dwarfdump on windows: 
+ first build libelf using: configure --prefix=mingw;make;make install
+ then build libdwarf using: cd libdwarf;configure --enable-windowspath;make
+ then build dwarfdump (not yet dwarfdump2): cd ../dwarfdump;configure --enable-windowspath;make
+ the final exe is under the current directory: copy it it to the proper bin directory under script renaming it to dwarfdump2.exe
+ copy dwarfdump.exe <somepath>\scripts\bin\win32\bin\dwarfdump2.exe
+ 
+ On Linux and other *nix:
+ build and install libelf: see the libelf ABOUT. 
+ When done run additionally: sudo make install
+ then for dwarfdump proper
+ tar -xzf libdwarf-20081231.tar.gz
+ cd dwarf-20081231/libdwarf
+ ./configure
+ make
+ cd ../dwarfdump
+ ./configure
+ the final exe is under the current directory: copy it it to the proper bin directory under script renaming it to dwarfdump2
+ cp dwarfdump  ~/dist/scripts-7974/trunk/scripts/bin/Linux-s390x/bin/dwarfdump2
+ FINALLY: uninstall libelf installed above
+ cd ../../../libelf/libelf-0.8.10/;sudo make uninstall
+ 
+ 

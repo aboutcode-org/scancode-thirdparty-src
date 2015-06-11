@@ -1,0 +1,1472 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+	<title>DA's DWARF Page</title>
+        <META NAME="description" CONTENT="David Anderson's DWARF Page">
+        <META NAME="keywords" CONTENT="Lotus, C, C++, DWARF, DWARF2, DWARF3, Lotus Elan, Lotus Europa, Lotus Esprit, rpm build">
+</head>
+
+<body text="#002E00" bgcolor="#FFFFE6" link="#0000FF" vlink="#800080" alink="#FF0000" LEFTMARGIN="3" TOPMARGIN="0">
+&nbsp;
+<!-- visit counter -->
+<img src="counter.cgi">
+<!--START OF NAVIGATION BAR-->
+<table BORDER=0 CELLPADDING=4 WIDTH="800" HEIGHT="10" >
+
+<tr ALIGN=center VALIGN=center>
+
+<td WIDTH="8%" BGCOLOR="#000000"><b><font face="Arial, helvetica"><font size=-1>
+		<a href=index.html><font color="#FFCC33">HOME</a></font></font></font></b></td>
+<td WIDTH="7%" BGCOLOR="#000000"><b><font face="Arial, helvetica"><font size=-1>
+		<a href="./software.html"><font color="#FFCC33">Software&nbsp;</a></font></font></font></b></td>
+<td WIDTH="7%" BGCOLOR="#000000"><b><font face="Arial, helvetica"><font size=-1>
+		<a href="./palm.html"><font color="#FFCC33">Palm&nbsp;</a></font></font></font></b></td>
+<td WIDTH="7%" BGCOLOR="#000000"><b><font face="Arial, helvetica"><font size=-1>
+		<a href="./dwarf.html"><font color="#FFCC33">DWARF&nbsp;</a></font></font></font></b></td>
+<td WIDTH="7%" BGCOLOR="#000000"><b><font face="Arial, helvetica"><font size=-1>
+		<a href="./lotus.html"><font color="#FFCC33">Lotus Cars&nbsp;</a></font></font></font></b></td>
+<td WIDTH="7%" BGCOLOR="#000000"><b><font face="Arial, helvetica"><font size=-1>
+		<a href="./rpmbuild.html"><font color="#FFCC33">RPM Building&nbsp;</a></font></font></font></b></td>
+</tr>
+</table>
+<!--END OF NAVIGATION BAR-->
+
+<!--START OF LOGO & PAGE TITLE-->
+<table BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH="800" VSPACE="0" HSPACE="0" >
+<tr align=left valign=top>
+<td WIDTH=18% HEIGHT=0><img SRC="./l30.jpg" valign="top" align=LEFT></td>
+<td align=left VALIGN=BOTTOM width=82% colspan=2><font face="Arial, helvetica">
+<font color="#006600"><font size=+4>
+</font></font></font></td>
+
+</tr>
+</table>
+<table WIDTH="800">
+<tr>
+<td align = center BORDER=0 CELLSPACING=0 CELLPADDING=0 WIDTH="800" VSPACE="0" HSPACE="0">
+<h1 id=top>David A's DWARF Page</h1>
+</td>
+</tr>
+</table>
+<!---  END OF LOGO & PAGE TITLE-->
+<! --- Rest of web page goes here, ending in /body /html ---!>
+<!--- DWARF Page---!>
+<link rel="alternate" type="application/rss+xml" title="Libdwarf News" 
+href="http://reality.sgiweb.org/davea/rss/libdwarf.xml" />
+<P>
+Note the rss-feed symbol in your url bar. A new feature 
+as of August 18 2008
+so you can keep track of releases easily with a 'live bookmark' in
+firefox (or your favorite rss-reader). 
+</P>
+<P>
+<img SRC="./T.jpg" align=left>
+he DWARF Debugging Information Format is of interest to
+programmers working on compilers and debuggers.
+It was developed by a committee starting around 1991. 
+Starting around 1991 SGI developed the libdwarf and dwarfdump 
+tools for internal use and as part of SGI IRIX developer tools.
+Since that time dwarfdump and libdwarf
+have been shipped 
+(as an executable and archive respectively, not source)
+with every release of the SGI MIPS/IRIX C compiler.
+In 1994 (I think the correct year) 
+SGI agreed (at my request) to open-source libdwarf 
+(and in 1999 to open-source dwarfdump) so anyone could use them.
+</p>
+<p>
+License terms are GPL/LGPL.
+The details are discussed in 
+<A HREF="dwarflicense.html">
+the license page</a>
+</p>
+<p>
+DWARF specifications and the dwarf
+email forums are at
+<A HREF="http://www.dwarfstd.org">http://www.dwarfstd.org</a>.
+Sign up for the email discussion list there.
+</p>
+Email about libdwarf and dwarfdump 
+may be sent to <strong>libdwarf-list  -at- 
+earthlink -dot- net </strong>  (replace -at- and -dot- with the normal
+single characters to form the email address).
+<P>
+A comparison of DWARF3 with DWARF2 updated December 1, 2005, titled
+<a href="dwarf3features.pdf">
+"DWARF3: Better than DWARF2"
+</a>
+(pdf, 81736 bytes) might be of interest if you are interested
+in how DWARF3 differs from DWARF2.
+The source code is
+<a href="dwarf3features.lyx">
+available here written in lyx
+</a>( using lyx as an  experiment in evaluating the 
+lyx document preparation system).
+
+</P>
+<p>
+All libdwarf distributions contain C source plus the DWARF2
+specification plus libdwarf specifications.
+</p>
+<p>
+Compilation will fail if libelf.h is missing (it's missing
+from RedHat 9.0, for example, though libelf.a/.so is present).
+In that case 
+<A HREF="http://www.gnu.org/directory/libs/misc/libelf.html">find
+a libelf distribution to get libelf.h.</A>
+</p>
+<p>
+Beginning in 2007 libelf.h may be distributed with a use of off64_t
+as a data type. In 32bit Linux with some distributions either
+_GNU_SOURCE or __USE_LARGEFILE64 must be defined before including
+either sys/types.h or libelf.h: a plain include
+of libelf.h will not compile.  
+The configure scripts and some
+coding in libdwarf/dwarfdump headers attempt to deal
+with this as of December 2007 so that older and newer
+libelf.h will work transparently (allowing libdwarf/dwarfump to build). 
+As a result of the 2007 libelf.h off64_t
+type you may see a warning from configure when plain libelf.h does not compile:
+ignore that configure warning.
+</p>
+<p>
+<font color=red><strong>HOT NEWS! Discovery 29 September 2008</strong></font>
+A gcc version (GNU C 4.1.2 (Gentoo 4.1.2) -g) 
+when generating 64-bit-offset-dwarf
+targetting a MIPS64 little-endian platform 
+(and perhaps other targets), generates line table
+prologue <strong>header_length </strong> 
+field with a value which is
+exactly 12 too large.   A dwarfdump/libdwarf error
+of DW_DLE_LINE_PROLOG_LENGTH_BAD (most libdwarf releases) or a Warning from
+dwarfdump -l -v -v -v -v (libdwarf 20080929) indicates this error was
+encountered.  Almost all gcc DWARF2 generation involves
+32-bit-offset DWARF2 (even if the target machine has 64 bit pointers)
+so it's very unlikely this bug will affect you.
+As of the 20081012 release libdwarf works around this bug.
+A gcc bug report is in the works according to Phil Mucci, who
+provided an object file showing the bug (thanks Phil!).
+</p>
+
+
+<table border>
+<tr>
+<th>
+filename, download-link
+</th>
+<th>
+Bytes
+</th>
+<th>
+Reason for release
+</th>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20081119.tar.gz" id=20081119>libdwarf-20081119.tar.gz</A>
+</td>
+<td>
+1102362
+</td>
+<td>
+<p>
+A compiler was using DW_FORM_ref_addr form with a DW_AT_sibling
+attribute, which was a surprise. Now we handle it and with
+dwarfdump-ka we check the offset for correctness.
+Added the -M option to dwarfdump which adds the name of
+each attribute's form to the existing output.
+Thanks to Davide Parodi for mentioning the DW_AT_sibling
+problem and providing a non-proprietary test case.
+</p>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20081013.tar.gz" id=20081013>libdwarf-20081013.tar.gz</A>
+</td>
+<td>
+1099626
+</td>
+<td>
+<p>
+Libdwarf gave DW_DLE_CIE_RET_ADDR_REG_ERROR when it should not have
+gotten an error at all.
+Thanks to shihhuangti for providing an executable that showed the libdwarf
+error.
+</p>
+</td>
+</tr>
+
+
+
+<tr>
+<td>
+<A HREF="libdwarf-20081012.tar.gz" id=20081012>libdwarf-20081012.tar.gz</A>
+</td>
+<td>
+1099664
+</td>
+<td>
+<p>
+Now a dwarf-64 bug in gcc is worked-around properly in libdwarf
+and the warning from dwarfdump is more correctly phrased.
+A new dwarfdump configuration '-x abi=ppc'
+provides specific sizing and names for power pc registers.
+Thanks to Phil Mucci for providing a test case.
+</p>
+</td>
+</tr>
+
+
+<tr>
+<td>
+<A HREF="libdwarf-20080929.tar.gz" id=20080929>libdwarf-20080929.tar.gz</A>
+</td>
+<td>
+1097528
+</td>
+<td>
+<p>
+Fixed: Mixing eh and non-eh frame sections access
+could result in a bogus error-return. 
+Documented that dwarf_get_fde_n()
+and dwarf_get_fde_at_pc() require a real (non-empty)
+fde table.  
+That was (sort of) always true, but
+was not documented.
+Fixed bogus error code in reading line tables.
+Added a warning (removing error return) when
+there are bytes of 'unused data' after a line table
+prolog (it's strange but legal when done properly in DWARF).
+</p>
+</td>
+</tr>
+
+
+<tr>
+<td>
+<A HREF="libdwarf-20080818.tar.gz" id=20080818>libdwarf-20080818.tar.gz</A>
+</td>
+<td>
+1091066
+</td>
+<td>
+<p>
+Minor improvements:
+dwarfdump print_reloc.c referred to sym_data_entry_count
+in one place where sym_data_64_entry_count should have been tested.
+DW_DLA_PUBTYPE_CONTEXT was a typo, DW_DLE_PUBTYPE_CONTEXT was intended.
+Fixed indentation and removed some tabs in favor of spaces (in five files).
+A couple files had a couple lines with CR-LF line endings, the CR is now gone.
+Corrected minor typographical errors in libdwarf2p.1.mm and libdwarf2.1.mm
+and regenerated the pdfs.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20080615.tar.gz" id=20080615>libdwarf-20080615.tar.gz</A>
+</td>
+<td>
+1092542
+</td>
+<td>
+<p>
+Removed __SGI_FAST_LIBELF code, no one could use it anyway.
+Fixed an off-by-one in dwarfdump which could reference off
+the end of an array in a specfic circumstance and verify string table
+index refers to inside the table when printing relocations.
+Corrected return code from libdwarf when there is no dwarf information.
+Thanks to Carlos Alberto Enciso for noticing the bugs.
+Fixed indentation and removed some tabs in favor of spaces (in a few files).
+</P>
+</td>
+</tr>
+
+
+
+<tr>
+<td>
+libdwarf-20080613.tar.gz
+</td>
+<td>
+---
+</td>
+<td>
+<p>
+Withdrawn. A typo meant the main directory extracted from the
+tarball had the wrong name (it had 2006 in the name, not 2008). 
+See libdwarf-20080615.tar.gz
+for the corrected tarfile.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20080409.tar.gz">libdwarf-20080409.tar.gz</A>
+</td>
+<td>
+1091778
+</td>
+<td>
+<p>
+A giant a.out exposed an inflexible (slow) handling of
+abbreviations in libdwarf as well as showing
+that one (internal) field was too small to accommodate
+over 64K abbreviations in one compilation unit.
+The relevant hash table adapts now and the field is 'large enough'.
+Added -H and -n options to dwarfdump.
+Added a dwarfdump -ka new check for correctness.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20080228.tar.gz">libdwarf-20080228.tar.gz</A>
+</td>
+<td>
+1086598
+</td>
+<td>
+<p>
+This changes the libdwarf-internal implementation of
+reading libelf so that the reader is not directly tied to libelf
+or even elf.  Meaning a libdwarf can be built
+that reads other object file types or that uses some library other
+than libelf to do the reading (subject only to simple
+constraints, see libdwarf.h).
+Thanks to Josh Fuhs for designing and implementing the
+object-file-reader revisions.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20080208.tar.gz">libdwarf-20080208.tar.gz</A>
+</td>
+<td>
+1079230
+</td>
+<td>
+<p>
+Due to a typo, calling _dwarf_fde_section_offset()
+(a interface which is still supported) would lead to an infinite loop
+in libdwarf-20071209 and libdwarf-20080125.
+The libdwarf producer forms code now allows more of the newer
+attributes (so is more complete). Alloca is no longer used
+anywhere (it was really only used one place).
+The libdwarf producer code controlling the offset-size
+is more sensible: standard DWARF (32 bit offsets) is the default, 
+use configure --enable-dwarf-format-sgi-irix to get
+IRIX 64bit offsets. See the libdwarf README 
+and libdwarf2p.1.pdf for details.
+Thanks to Carlos Alberto Enciso and Melanie Zumwalde
+for noticing some of these errors.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20080125.tar.gz">libdwarf-20080125.tar.gz</A>
+</td>
+<td>
+1074859
+</td>
+<td>
+<p>
+In the producer library code
+dwarf_die_link() is now O(1) where it was O(N) before.
+Thanks to Daniel Gollub for finding this performance improvement.
+dwarf_die_link() now back-links siblings (in its
+internal lists) correctly. The back link bug had no (known) effect
+on dwarf generated by libdwarf.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20071209.tar.gz">libdwarf-20071209.tar.gz</A>
+</td>
+<td>
+1073568
+</td>
+<td>
+<p>
+Renamed 4 functions  so they are now exported by libdwarf as dwarf_*.
+dwarf_fde_section_offset(), dwarf_cie_section_offset(), dwarf_print_lines(),
+and dwarf_ld_sort_lines() are the new names.
+The old _dwarf_* names are still supported in libdwarf.h
+but anyone building a shared library could choose to 
+export only dwarf_* names and dwarfdump will now
+compile and link successfully with that shared library.
+The changes in libdwarf-20071208.tar.gz are
+incorporated in this release.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+libdwarf-20071208.tar.gz
+</td>
+<td>
+withdrawn
+</td>
+<td>
+<p>
+Added acceptance of .eh_frame S augmentation.
+Updated config.guess config.sub to latest (2006-11-15).
+Added configure tests and some code in dwarf_incl.h and
+globals.h to define _GNU_SOURCE so that it will all compile
+with recent libelf.h use of off64_t (yet still compile
+with earlier libelf.h).  Regenerated configure.
+Withdrawn in favor of the December 9 version above.
+Two nearly identical releases a single day apart seemed silly.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20071016.tar.gz">libdwarf-20071016.tar.gz</A>
+</td>
+<td>
+1069958
+</td>
+<td>
+<p>
+Two fixes. dwarf_siblingof() could try to access a byte past the end
+of an Elf section leading to a coredump.
+The dwarf macro reading code could (in the DWARF_SIMPLE_MALLOC
+case only) allocate and free memory inconsistently leading
+to malloc arena corruption.  Thanks to Cristi Vlasceanu
+for providing a tiny testcase showing the problems.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20071015.tar.gz">libdwarf-20071015.tar.gz</A>
+</td>
+<td>
+1069600
+</td>
+<td>
+<p>
+The special build macro DWARF_SIMPLE_MALLOC was incorrectly
+implemented (now fixed): it could lead builds employing
+that macro to coredump in libdwarf.
+Now (just before exit) dwarfdump free()s some space it
+previously left mallocd.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20070904.tar.gz">libdwarf-20070904.tar.gz</A>
+</td>
+<td>
+1068927
+</td>
+<td>
+<p>
+Updated FSF address everywhere.
+Added qualifier for DWARF4 DW_AT_high_pc where applicable in
+dwarfdump output.
+Deleted 2 files which were never used.
+Added documentation of new producer functions in libdwarf.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20070703.tar.gz">libdwarf-20070703.tar.gz</A>
+</td>
+<td>
+1064669
+</td>
+<td>
+<p>
+Adding new libdwarf function dwarf_get_loclist_entry() to
+extract CFA val_expression bytes usefully.
+dwarfdump now uses that info to print those expression bytes with -v.
+Corrected incorrect output new in 20070702.
+</P>
+</td>
+</tr>
+
+
+<tr>
+<td>
+libdwarf-20070702.tar.gz
+</td>
+<td>
+withdrawn
+</td>
+<td>
+<p>
+Withdrawn: see newer release.
+Adding -R option to dwarfdump: a 'generic' register set
+for frames which prints registers as r<n> ('r35' for example)
+and allows register numbers up to 1000.
+</P>
+</td>
+</tr>
+
+
+<tr>
+<td>
+<A HREF="libdwarf-20070701.tar.gz">libdwarf-20070701.tar.gz</A>
+</td>
+<td>
+1060269
+</td>
+<td>
+<p>
+DW_CFA_val_expression was handled wrong in libdwarf leading
+eventually to an invalid register number reading
+a GNU .eh_frame section (dwarfdump reported an error). 
+Once again thanks to Cristian Vlasceanu for noticing libdwarf was broken
+and for providing a test case.
+</P>
+</td>
+</tr>
+
+
+
+
+
+<tr>
+<td>
+<A HREF="libdwarf-20070525.tar.gz">libdwarf-20070525.tar.gz</A>
+</td>
+<td>
+1059960
+</td>
+<td>
+<p>
+Now the documentation is in pdf form (instead of postscript) as most
+people expect documents to be pdf.
+Corrected libdwarf and dwarfdump bugs that prevented dumping
+GNU eh_frame built with gcc 4.1.2.
+Thanks to Cristian Vlasceanu for noticing libdwarf was broken
+and for providing a test case.
+</P>
+</td>
+</tr>
+
+
+<tr>
+<td>
+<A HREF="libdwarf-20070508.tar.gz">libdwarf-20070508.tar.gz</A>
+</td>
+<td>
+934034
+</td>
+<td>
+<p>
+Incorporates Sun Microsystems additions including
+cleanups of the producer code so it no longer leaks
+memory and the -G option to dwarfdump.
+Thanks to Chris Quenelle for his help.
+Minor cleanups to the producer library document and
+the copyright documents (no change in terms is intended).
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20070412.tar.gz">libdwarf-20070412.tar.gz</A>
+</td>
+<td>
+907541
+</td>
+<td>
+<p>
+Lists Sun Microsystems extensions (dwarf.h), so dwarfdump
+on Sun executables shows readable output. 
+Thanks to Chris Quenelle for his help.
+The old sgi-specific -mm-to-ps document build
+now uses groff instead (regenerated
+documents with groff). Increased the static size of the dwarfdump
+die-stack (dwarfdump now exits with an error if the stack overflows).
+</P>
+</td>
+</tr>
+
+
+<tr>
+<td>
+<A HREF="libdwarf-20070223.tar.gz">libdwarf-20070223.tar.gz</A>
+</td>
+<td>
+902453
+</td>
+<td>
+<p>
+Some formatting was a bit off because of macros without
+terminating semicolons. Changed all the libdwarf/dwarf_util.h
+macros so now all uses require terminating semicolons and
+re-indented libdwarf. Fixed an output bug in
+dwarfdump frame output (was missing a newline in some cases).
+</P>
+</td>
+</tr>
+
+
+<tr>
+<td>
+<A HREF="libdwarf-20070220.tar.gz">libdwarf-20070220.tar.gz</A>
+</td>
+<td>
+902042
+</td>
+<td>
+<p>
+dwarf_get_macro_details() was leaking memory and
+had thread-unfriendly static data.
+libdwarf/README has words about thread safety now.
+The dwarf_frame printing code was off-by-one so it
+printed some bytes wrong in val-expressions.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20070209.tar.gz">libdwarf-20070209.tar.gz</A>
+</td>
+<td>
+886341
+</td>
+<td>
+<p>
+dwarf_srclines() was leaking memory.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20061206.tar.gz">libdwarf-20061206.tar.gz</A>
+</td>
+<td>
+886388
+</td>
+<td>
+<p>
+dwarf_frame.c _dwarf_exec_frame_instr() 
+was still using fixed register table sizes.
+Now uses run-time sizing.
+Thanks to Peter Lloyd for noticing a &lt;= where a &lt; was wanted in
+that routine.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20061108.tar.gz">libdwarf-20061108.tar.gz</A>
+</td>
+<td>
+885908
+</td>
+<td>
+<p>
+Previously, producer code would coredump if dwarf_add_expr_gen() called
+with DW_OP_deref_size, DW_OP_xderef_size, or DW_OP_pick as
+the operator.
+</P>
+</td>
+</tr>
+
+
+<tr>
+<td>
+<A HREF="libdwarf-20060925.tar.gz">libdwarf-20060925.tar.gz</A>
+</td>
+<td>
+893251
+</td>
+<td>
+<p>
+An unusual sequence of dwarf_next_cu_header() calls
+could result in dwarf_offdie() returning the wrong die.
+The problem is not visible in dwarfdump output 
+as dwarfdump does not
+use a call sequence that could show the problem.
+</P>
+</td>
+</tr>
+
+
+
+<tr>
+<td>
+<A HREF="libdwarf-20060614.tar.gz">libdwarf-20060614.tar.gz</A>
+</td>
+<td>
+892429
+</td>
+<td>
+<p>
+dwarfdump: Minor cleanup of gnu eh_frame augmentation data output.
+libdwarf: Correct the handling of DW_EH_PE_pcrel flag in
+code dealing with gnu eh_frame z augmentation (errors were
+noticed in .eh_frame output by libdwarf/dwarfdump  for x86_64).
+The 'clean' rule of the Makefile now removes libdwarf.so if 
+libdwarf.so is present
+in the build directory.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20060612.tar.gz">libdwarf-20060612.tar.gz</A>
+</td>
+<td>
+878865
+</td>
+<td>
+<p>
+dwarfdump: When (as for DW_FORM_data1) the form does not
+indicate signedness and dwarfdump does not keep track
+of enough context to determine signedness and
+the value is such the signedness is unclear, print the value
+as unsigned followed by signed. An example is "182(as signed = -74)".
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20060421.tar.gz">libdwarf-20060421.tar.gz</A>
+</td>
+<td>
+877722
+</td>
+<td>
+<p>
+libdwarf: fixed bad initialization in dwarf_get_fde_info_for_all_regs().
+Thanks to Cristi Vlasceanu for noticing it was broken.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20060419.tar.gz">libdwarf-20060419.tar.gz</A>
+</td>
+<td>
+877465
+</td>
+<td>
+<p>
+dwarfdump: added fclose() on configuration file.
+dwarfdump and libdwarf: all .c files now formatted with GNU indent
+default formatting.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20060418.tar.gz">libdwarf-20060418.tar.gz</A>
+</td>
+<td>
+878784
+</td>
+<td>
+<p>
+dwarfdump (and libdwarf frame reader) are now configurable
+at run time to print frame data appropriately.
+So -f and -F will print register names appropriate for the ABI,
+and handle large or small register sets sensibly.
+(A single dwarfdump executable can print any number
+of different ABIs frame data 
+appropriately without recompiling libdwarf or dwarfdump -- and you can
+add your favorite ABI/instruction set into a configuration file.)
+See -x abi=<name> and the dwarfdump.conf file to get started.
+New frame interfaces are in libdwarf. See libdwarf2.1.ps (postscript)
+for details on the new DWARF3 libdwarf frame interfaces.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20060327.tar.gz">libdwarf-20060327.tar.gz</A>
+</td>
+<td>
+844193
+</td>
+<td>
+<p>
+Initializes file_entry_count in dwarf_line.c now.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+libdwarf-20060324.tar.gz
+</td>
+<td>
+844113
+</td>
+<td>
+<p>
+Corrects line table problems handling gcc3/gcc4 output.
+Refactored line-table-header reading into a single routine.
+Fixed typo that made access to .eh_frame impossible.
+844110 byte version of this file was missing dwarf.h fixes
+(nothing substantive, just moving things for human readers).
+844149 byte version is correct but rcs version strings not all updated.
+844113 byte version is the 'final' version. 
+file_entry_count in dwarf_line.c is uninitialized (BUG!).
+Initialize it to 0 for correct operation.
+Thanks to Mikael Vidstedt for noticing.
+WITHDRAWN.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20060317.tar.gz">libdwarf-20060317.tar.gz</A>
+</td>
+<td>
+841545
+</td>
+<td>
+<p>
+Now handles gcc's DWARF3 and eh_frame sensibly.
+Parts are untested as I have no test cases for
+various DWARF3 constructs.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20060308.tar.gz">libdwarf-20060308.tar.gz</A>
+</td>
+<td>
+834474
+</td>
+<td>
+<p>
+The crucial dwarf_child() code could dereference a byte
+off the end of a CU. Fixed.
+Refactored .debug_frame code for clarity, performance,
+elimination of duplicate code, and preparing to handle GNU eh_frame
+(support for latest eh_frame not yet present).
+Moved some sgi/irix only functions to separate source files
+so most apps will get fewer bytes of libdwarf linked in.
+If you have 834453 byte version, it is broken, delete it: revised to
+834474 byte version.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20060224.tar.gz">libdwarf-20060224.tar.gz</A>
+</td>
+<td>
+827906
+</td>
+<td>
+<p>
+Added dwarf_line_srcfileno() function and documented it.
+</P>
+</td>
+</tr>
+
+
+<tr>
+<td>
+<A HREF="libdwarf-20051201.tar.gz">libdwarf-20051201.tar.gz</A>
+</td>
+<td>
+826422
+</td>
+<td>
+<p>
+Corrected validity-checking tables
+and made creation of internal tables more robust for 
+dwarfdump -k.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+libdwarf-20051128.tar.gz
+</td>
+<td>
+824714
+</td>
+<td>
+<p>
+Corrected dwarf.h (per public review document).
+Added DWARF3 tags, attrs to validity-checking tables
+in dwarfdump (-k? options).
+WITHDRAWN. Bugs in -k output.
+</P>
+</td>
+</tr>
+
+
+
+
+<tr>
+<td>
+<A HREF="libdwarf-20051108.tar.gz">libdwarf-20051108.tar.gz</A>
+</td>
+<td>
+822758
+</td>
+<td>
+<p>
+Removed non-standard malloc.h includes (stdlib.h suffices).
+Corrected  a couple dwarf3 omissions in dwarf.h.
+</P>
+</td>
+</tr>
+
+
+<tr>
+<td>
+<A HREF="libdwarf-20051024.tar.gz">libdwarf-20051024.tar.gz</A>
+</td>
+<td>
+822665
+</td>
+<td>
+<p>
+Added in the new DWARF3 codes specified in the DWARF3
+public review document just published on
+<A HREF="http://dwarf.freestandards.org">
+the free standards website. </a>
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20051003.tar.gz">libdwarf-20051003.tar.gz</A>
+</td>
+<td>
+821184
+</td>
+<td>
+<p>
+Fixed an incompatibility: the July/August versions did not
+support exactly the same dealloc code as earlier
+versions for SGI-only dwarf sections like .debug_weaks.
+Full compatibility is restored, and the new more-complete-dealloc
+interfaces from July are kept.
+</P>
+</td>
+</tr>
+
+
+<tr>
+<td>
+<A HREF="libdwarf-20050801.tar.gz">libdwarf-20050801.tar.gz</A>
+</td>
+<td>
+820895
+</td>
+<td>
+<p>
+dwarfdump could coredump due to fixed length buffer overrun
+for location list printing. Buffer now expands as needed.
+And dwarfdump sprintf calls changed to snprintf for further
+safety.
+</P>
+</td>
+</tr>
+
+
+<tr>
+<td>
+<A HREF="libdwarf-20050722.tar.gz">libdwarf-20050722.tar.gz</A>
+</td>
+<td>
+819084
+</td>
+<td>
+<p>
+New deallocation routines for dwarf_srclines() and all the
+pubnames-like sections.  New (optional at library-compile)
+full checking of dealloc calls.  New support for .debug_pubtypes
+section (DWARF 3 section).  All deallocation code verified,
+so all libdwarf memory leaks plugged (but client code must change
+to get full dealloc properly). dwarf_formstring() documentation
+was wrong: no dealloc required or allowed (documentation fixed).
+</P>
+</td>
+</tr>
+
+
+<tr>
+<td>
+<A HREF="libdwarf-20050714.tar.gz">libdwarf-20050714.tar.gz</A>
+</td>
+<td>
+807304
+</td>
+<td>
+<p>
+[This release not recommended. Certain memory leaks
+have been fixed. Use 20050722 instead]
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20050503.tar.gz">libdwarf-20050503.tar.gz</A>
+</td>
+<td>
+801031
+</td>
+<td>
+<p>
+Moved common code into subroutine (for .debug_pubnames and like
+sections). Added checks for
+new gcc z* .eh_frame augmentation strings (which we don't yet handle, 
+but do recognize now). Added -F flag for .eh_frame (making its
+handling a disinct flag (from -f)).
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20050318.tar.gz">libdwarf-20050318.tar.gz</A>
+</td>
+<td>
+794541
+</td>
+<td>
+<p>
+Corrected  handling of .eh_frame and .debug_macro.
+Radically changed the formatting of .debug_macro to make it more complete.
+Still lacking support for dwarf3 frame operations.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20050216.tar.gz">libdwarf-20050216.tar.gz</A>
+</td>
+<td>
+792579
+</td>
+<td>
+<p>
+Beginning of support for dwarf3 reading.
+Added #elif in pro_incl.h so another platform builds out-of-the-box,
+even missing elf.h. (The library remains firmly Elf specific though.
+In this specific added allowance libelf.h fills in the types.)
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf-20041122.tar.gz">libdwarf-20041122.tar.gz</A>
+</td>
+<td>
+792298
+</td>
+<td>
+<p>
+Updated configury for debian/mips.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf20041027.tar.gz">libdwarf20041027.tar.gz</A>
+</td>
+<td>
+791001
+</td>
+<td>
+<p>
+Updated dwarf.h, adding #define for HP and GNU attributes/tags.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf20041026.tar.gz">libdwarf20041026.tar.gz</A>
+</td>
+<td>
+790070
+</td>
+<td>
+<p>
+Regenerate configure config.h.in (using autoconf 2.58).
+Update config.guess config.sub.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf20041011.tar.gz">libdwarf20041011.tar.gz</A>
+</td>
+<td>
+785822
+</td>
+<td>
+<p>
+Sets ru_offset (libdwarf) now when it was overlooked before.
+Avoids recursion in favor of iteration (dwarfdump) on siblings.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf20040507.tar.gz">libdwarf20040507.tar.gz</A>
+</td>
+<td>
+785289
+</td>
+<td>
+<p>
+dwarfdump -k a
+would coredump dwarfdump: getopt arg list was wrong.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf20040315.tar.gz">libdwarf20040315.tar.gz</A>
+</td>
+<td>
+785268
+</td>
+<td>
+<p>
+For DW_CFA_def_cfa_register, the dwarf reader
+was setting more than just the register: was zeroing offset.
+Now it just sets the register value.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf20040203.tar.gz">libdwarf20040203.tar.gz</A>
+</td>
+<td>
+785224
+</td>
+<td>
+<p>
+If compiled with Dwarf_Word 64 bits, upper bits
+of values from two 'optimization' macros were erroneous.
+Revised the macros to call already existing routines.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+libdwarf20040115.tar.gz
+</td>
+<td>
+785181
+</td>
+<td>
+<p>
+Changed from bzero() to memset() calls for portability.
+Removed #include of bstring.h, no longer needed.
+Added check for alloca.h in configure.
+Temporarily unavailble.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf20040102.tar.gz">libdwarf20040102.tar.gz</A>
+</td>
+<td>
+784278
+</td>
+<td>
+<p>
+Updated configure scripts and added README hints.
+Recent RedHat and Debian don't ship with libelf.h giving
+folks trouble.  And anyway the configure stuff was really 
+old/obsolete.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf20031230.tar.gz">libdwarf20031230.tar.gz</A>
+</td>
+<td>
+733009
+</td>
+<td>
+<p>
+Corrected typo in comment, fixed botch in .eh_frame
+section recognition.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf20031006.tar.gz">libdwarf20031006.tar.gz</A>
+</td>
+<td>
+732757
+</td>
+<td>
+<p>
+Applied indent(1) to recently changed files.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf20031002.tar.gz">libdwarf20031002.tar.gz</A>
+</td>
+<td>
+733758
+</td>
+<td>
+<p>
+Adds support for the .debug_loc section.
+DW_FORM_indirect support fixed.
+Allows padding at the end of .debug_pubnames .debug_aranges
+and the like (the data has a 'terminator' and the header
+has a length, and if the length allows a bit of padding
+after the terminator that's ok).
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf2003Apr06.tar.gz">libdwarf2003Apr06.tar.gz</A>
+</td>
+<td>
+717884
+</td>
+<td>
+<p>
+Now delays loading sections till really required.
+
+Supporting the DWARF2 Debugging Information Format
+produced by a variety of compilers, with some limited support for
+some aspects of DWARF3.
+</P>
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf2002Nov22.tar.gz">libdwarf2002Nov22.tar.gz</A>
+</td>
+<td>
+722257
+</td>
+<td>
+Adds support for printing macro sections.
+Corrects spellings of a couple TAGs.
+Adds UPC  (Universal Parallel C) user-space defines.
+
+The awk scripts in dwarfdump now allow multiple TAG names
+with the same value to be handled: the first such
+encountered is taken as the name dwarfdump uses.
+For example, DW_TAG_template_type_parameter and
+DW_TAG_template_type_param were both used in the DWARF2 spec,
+and now dwarf.h allows both spellings by having two #defines
+with the same value (DWARF3 specifies that DW_TAG_template_type_parameter
+is the correct spelling).
+</td>
+</tr>
+<tr>
+<td>
+<A HREF="libdwarf2002Oct23.tar.gz">libdwarf2002Oct23.tar.gz</A>
+</td>
+<td>
+721083
+</td>
+<td>
+Bug fixes (to consumer and producer
+libraries) plus making dwarf_get_str() in the library
+work sensibly (revision of the functional interface).
+</td>
+</tr>
+
+
+<tr>
+<td>
+<A HREF="libdwarf2002April28.tar.gz">libdwarf2002April28.tar.gz</A>
+</td>
+<td>
+717884
+</td>
+<td>
+Many bug fixes...
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf2001Aug29.tar.gz">libdwarf2001Aug29.tar.gz</A>
+</td>
+<td>
+721452
+</td>
+<td>
+Early release with dwarfdump.
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf2000Jun12.tar.gz">libdwarf2000Jun12.tar.gz</A>
+</td>
+<td>
+713543
+</td>
+<td>
+Early release with dwarfdump.
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf2001Jun07.tar.gz">libdwarf2001Jun07.tar.gz</A>
+</td>
+<td>
+716508
+</td>
+<td>
+Early release with dwarfdump.
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf2001May23.tar.gz">libdwarf2001May23.tar.gz</A>
+</td>
+<td>
+716027
+</td>
+<td>
+Early release with dwarfdump.
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf2000Jul25.tar.gz">libdwarf2000Jul25.tar.gz</A>
+</td>
+<td>
+712694
+</td>
+<td>
+The source changed from original SGI release terms to
+LGPL terms (standard GPL/LGPL but naming
+SGI as copyright holder) in April 2000, so this
+is the first public release (that I know of/have a copy of) 
+with the new terms.
+</td>
+</tr>
+
+<tr>
+<td>
+<A HREF="libdwarf1999Dec14.tar.gz">libdwarf1999Dec14.tar.gz</A>
+</td>
+<td>
+712252
+</td>
+<td>
+Early release with dwarfdump.
+</td>
+</tr>
+
+
+<tr>
+<td>
+1999
+</td>
+<td>
+?
+</td>
+<td>
+First libdwarf with configure script, late June 1999.
+</td>
+</tr>
+
+<tr>
+<td>
+1999
+</td>
+<td>
+?
+</td>
+<td>
+First release including dwarfdump sometime after March 1999.
+</td>
+</tr>
+
+<tr>
+<td>
+1994
+</td>
+<td>
+?
+</td>
+<td>
+Initial release of libdwarf (no dwarfdump, no configure script), 
+likely was in June 1994.
+The original copyright terms were unique to SGI  and required
+certain acknowledgements in documentation by 
+organizations shipping libdwarf.
+</td>
+</tr>
+</table>
+<P>
+For a few obsolete releases of libdwarf see
+<A HREF="ftp://ftp.sgi.com/sgi/dev/davea">ftp://ftp.sgi.com/sgi/dev/davea</A>.
+Copies of the libdwarf releases on ftp.sgi.com are available in the
+list above.
+</P>
+
+</BODY>
+</HTML>

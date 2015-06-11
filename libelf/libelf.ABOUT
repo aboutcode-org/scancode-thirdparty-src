@@ -1,0 +1,9 @@
+url:http://www.mr511.de/software/libelf-0.8.10.tar.gz
+url:http://www.mr511.de/software/
+How to build:
+ tar -xzf libelf-0.8.10.tar.gz
+ cd libelf-0.8.10/
+ ./configure
+ make
+ cd lib
+ cp libelf.*  ~/dist/scripts-7974/trunk/scripts/bin/Linux-s390x/lib/

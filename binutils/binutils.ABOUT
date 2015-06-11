@@ -1,0 +1,21 @@
+url:http://ftp.gnu.org/gnu/binutils/
+url:http://ftp.gnu.org/gnu/binutils/binutils-2.19.tar.gz
+url:http://ftp.gnu.org/gnu/binutils/binutils-2.19.1.tar.bz2
+license:gpl-2.0,gpl-3.0,lgpl-2.0,lgpl-3.0
+url:url:http://downloads.sourceforge.net/project/mingw/GNU%20Binutils/Current%20Release_%20GNU%20binutils-2.19.1/binutils-2.19.1-src.tar.gz
+url:http://downloads.sourceforge.net/project/mingw/GNU%20Binutils/Current%20Release_%20GNU%20binutils-2.19.1/binutils-2.19.1-src.tar.gz
+How to build:
+ tar -xjf binutils-2.19.1.tar.bz2
+ cd  binutils-2.19.1/
+./configure -target=all
+ make
+ 
+ the bins are in binutils/: readeld, cxxfilt, ar and optionally nm or nm-new are the ones we use.
+ cp readelf ~/dist/scripts-7974/trunk/scripts/bin/Linux-s390x/bin/
+ cp cxxfilt ~/dist/scripts-7974/trunk/scripts/bin/Linux-s390x/bin/c++filt
+ cp ar  ~/dist/scripts-7974/trunk/scripts/bin/Linux-s390x/bin/
+ 
+
+ url:http://downloads.sourceforge.net/project/mingw/GNU%20Binutils/Current%20Release_%20GNU%20binutils-2.19.1/binutils-2.19.1-mingw32-bin.tar.gz
+url:http://downloads.sourceforge.net/project/mingw/GNU%20Binutils/Current%20Release_%20GNU%20binutils-2.19.1/binutils-2.19.1-src.tar.gz
+ 

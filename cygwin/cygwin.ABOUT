@@ -1,0 +1,9 @@
+home_url: http://cygwin.com/licensing.html
+license_text_url: http://cygwin.com/COPYING
+version: 1.5.25-15
+name: cygwin
+license_text: 
+    - COPYING
+notice_text:
+    - licensing.html
+

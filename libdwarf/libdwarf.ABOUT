@@ -1,0 +1,56 @@
+name: libdwarf
+download_url: http://sourceforge.net/code-snapshots/git/l/li/libdwarf/code.git/libdwarf-code-a33289863d582e5e74f2f34dfdcbe6ec7fb76227.zip
+download_url: http://www.mr511.de/software/libelf-0.8.13.tar.gz
+download_url: http://www.mr511.de/software/libelf-0.8.13.README
+
+notes: Build is a bit complex. And alhough we use dwarfdump and not dwarfdump2 we ALWAYS rename the final exe to dwarfdump2.exe or dwarfdump2 
+ to avoid naming conflicts on macosx: on mac dwarfdump is a standard executable provided with the base OS but this is not the same one as the 
+ one we build
+ 
+ Use this to build on Posix:
+    wget http://sourceforge.net/code-snapshots/git/l/li/libdwarf/code.git/libdwarf-code-a33289863d582e5e74f2f34dfdcbe6ec7fb76227.zip
+    wget http://www.mr511.de/software/libelf-0.8.13.tar.gz
+    tar -xzf libelf-0.8.13.tar.gz
+    cd libelf-0.8.13/
+    ./configure --prefix=$HERE --enable-compat
+    make
+    make install
+    cd ..
+    export HERE=`pwd`
+    export LDFLAGS="-L$HERE/lib/"
+    export CFLAGS="-I$HERE/include/libelf -I$HERE/include/"
+    export CPPFLAGS="-I$HERE/include/libelf -I$HERE/include/"
+    export CXXFLAGS="-I$HERE/include/libelf -I$HERE/include/"
+    unzip -q libdwarf-code-a33289863d582e5e74f2f34dfdcbe6ec7fb76227.zip
+    mv libdwarf-code-a33289863d582e5e74f2f34dfdcbe6ec7fb76227 libdwarf
+    cd libdwarf
+    ./configure --prefix=$HERE
+    cd dwarfdump2
+    ./configure --prefix=$HERE
+    cd ..
+    cd dwarfexample/
+    sed -i -e "s|LIBDIR= -L\.\.\/libdwarf|LIBDIR= -L../libdwarf -L$HERE/lib/|g" Makefile
+    cd ..
+    make
+ 
+ And on Windows use this with mingw, using the standard stock path for installing mysys and mingw:
+ - first build libelf using: configure --prefix=mingw;make;make install
+ - then build libdwarf using: cd libdwarf;configure --enable-windowspath;make
+ - then build dwarfdump (not yet dwarfdump2): cd ../dwarfdump;configure --enable-windowspath;make
+ the final exe is under the current directory: copy it it to the proper bin directory under script renaming it to dwarfdump2.exe
+ copy dwarfdump.exe <somepath>\thirdparty\bin\win32\bin\dwarfdump2.exe
+ 
+ On Linux and other *nix:
+ build and install libelf: see the libelf ABOUT. 
+ When done run additionally: sudo make install
+ then for dwarfdump proper
+ tar -xzf libdwarf-20081231.tar.gz
+ cd dwarf-20081231/libdwarf
+ ./configure
+ make
+ cd ../dwarfdump
+ ./configure
+ the final exe is under the current directory: copy it it to the proper bin directory under script renaming it to dwarfdump2
+ cp dwarfdump  <target>/bin/
+ FINALLY: uninstall libelf installed above
+ cd ../../../libelf/libelf-0.8.10/;sudo make uninstall
