@@ -1,24 +1,32 @@
 
-for xz:
-./configure —-prefix=/Users/pombreda/build
-make
-make install
+for xz, extract then::
 
-for libarchive:
-./configure --disable-bsdcpio --disable-bsdtar \
---disable-xattr --disable-acl \
---without-lzo2  \
---without-nettle --without-openssl \
---without-xml2 --without-expat \
---disable-rpath —-prefix=/Users/pombreda/build
-make
-make install
+    ./configure —-prefix=/Users/pombreda/build
+    make
+    make install
 
 
+for libarchive, extract then::
 
-cd /Users/pombreda/build/lib
-mv libarchive.13.dylib libarchive.dylib
-install_name_tool -change "/usr/local/lib/liblzma.5.dylib" "@loader_path/liblzma.5.dylib" libarchive.dylib 
-install_name_tool -id "@loader_path/libarchive.dylib" libarchive.dylib 
-install_name_tool -id "@loader_path/liblzma.5.dylib" liblzma.5.dylib 
+    ./configure --disable-bsdcpio --disable-bsdtar \
+    --disable-xattr --disable-acl \
+    --without-lzo2  \
+    --without-nettle --without-openssl \
+    --without-xml2 --without-expat \
+    --disable-rpath —-prefix=/Users/pombreda/build
+    make
+    make install
+
+
+Then, fix the installation paths hardcoded in the files::
+
+    cd /Users/pombreda/build/lib
+    mv libarchive.13.dylib libarchive.dylib
+    install_name_tool -id "@loader_path/libarchive.dylib" libarchive.dylib 
+    install_name_tool -id "@loader_path/liblzma.5.dylib" liblzma.5.dylib 
+    install_name_tool -change "/Users/pombreda/build/lib/liblzma.5.dylib" "@loader_path/liblzma.5.dylib" libarchive.dylib 
+
+
+Finally use these two libraries in scancode
+
 
