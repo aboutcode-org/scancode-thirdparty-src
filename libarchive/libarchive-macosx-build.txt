@@ -1,0 +1,24 @@
+
+for xz:
+./configure —-prefix=/Users/pombreda/build
+make
+make install
+
+for libarchive:
+./configure --disable-bsdcpio --disable-bsdtar \
+--disable-xattr --disable-acl \
+--without-lzo2  \
+--without-nettle --without-openssl \
+--without-xml2 --without-expat \
+--disable-rpath —-prefix=/Users/pombreda/build
+make
+make install
+
+
+
+cd /Users/pombreda/build/lib
+mv libarchive.13.dylib libarchive.dylib
+install_name_tool -change "/usr/local/lib/liblzma.5.dylib" "@loader_path/liblzma.5.dylib" libarchive.dylib 
+install_name_tool -id "@loader_path/libarchive.dylib" libarchive.dylib 
+install_name_tool -id "@loader_path/liblzma.5.dylib" liblzma.5.dylib 
+
