@@ -1,0 +1,53 @@
+The libarchive build is a tad engaged on MacOSX.
+MacOSX 10.6 does not have liblzma built in, but Later versions do have it.
+In contrast, iconv, zlib and bzip2 are always there with their headers.
+
+So we provide liblzma for all OSX versions, and ensure that libarchive
+use the vendored liblzma version by updating the dyblib hardcoded paths.
+
+See for some details of the approach here:
+https://blogs.oracle.com/dipol/entry/dynamic_libraries_rpath_and_mac
+
+Here is how to build:
+
+For xz, extract then::
+
+    ./configure —-prefix=/Users/pombreda/build
+    make
+    make install
+
+For libarchive, extract then::
+
+    ./configure --disable-bsdcpio --disable-bsdtar \
+    --disable-xattr --disable-acl \
+    --without-lzo2  \
+    --without-nettle --without-openssl \
+    --without-xml2 --without-expat \
+    --disable-rpath —-prefix=/Users/pombreda/build
+    make
+    make install
+
+
+Then, fix the installation paths hardcoded in the library files::
+    cd /Users/pombreda/build/lib
+    mv libarchive.13.dylib libarchive.dylib
+    install_name_tool -change "/Users/pombreda/build/lib/liblzma.5.dylib" "@loader_path/liblzma.5.dylib" libarchive.dylib 
+    install_name_tool -id "@loader_path/libarchive.dylib" libarchive.dylib 
+    install_name_tool -id "@loader_path/liblzma.5.dylib" liblzma.5.dylib 
+
+Finally use these two libraries for vendoring in scancode.
+
+
+On Macosx 10.6 running otool then yields this, once paths are fixed::
+
+    otool -L lib*
+    libarchive.dylib:
+        @loader_path/libarchive.dylib (compatibility version 15.0.0, current version 15.2.0)
+        /usr/lib/libiconv.2.dylib (compatibility version 7.0.0, current version 7.0.0)
+        @loader_path/liblzma.5.dylib (compatibility version 8.0.0, current version 8.1.0)
+        /usr/lib/libbz2.1.0.dylib (compatibility version 1.0.0, current version 1.0.5)
+        /usr/lib/libz.1.dylib (compatibility version 1.0.0, current version 1.2.3)
+        /usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 125.2.11)
+    liblzma.5.dylib:
+        @loader_path/liblzma.5.dylib (compatibility version 8.0.0, current version 8.1.0)
+        /usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 125.2.11)
