@@ -1,6 +1,8 @@
 #!/bin/bash
 #
-# Copyright (c) 2015 nexB Inc. http://www.nexb.com/ - All rights reserved.
+# Copyright (c) 2017 nexB Inc. http://www.nexb.com/ - All rights reserved.
+
+set -e
 
 lib_name=libarchive-3.1.2
 lib_archive=$lib_name.tar.gz
@@ -9,7 +11,7 @@ download_url=http://libarchive.org/downloads/$lib_archive
 
 function build_lib {
     # build proper
-    wget $download_url
+    # wget $download_url
     tar -xf $lib_archive
     cd $lib_name
     ./configure --disable-bsdcpio --disable-bsdtar \
@@ -26,12 +28,13 @@ function build_lib {
 os_name=$(uname -s)
 if [[ "$os_name" =~ "Linux" ]]; then
     # assuming Debian/Ubuntu Linux
-    sudo apt-get install -y wget build-essential zlib1g-dev liblzma-dev libbz2-dev
+    # sudo apt-get install -y wget build-essential zlib1g-dev liblzma-dev libbz2-dev
     build_lib
     mkdir -p .build/bin
     cp .libs/libarchive.so.13.1.2 .build/bin/libarchive.so
     strip .build/bin/*
-    echo "Build complete: .build contains extra sources for redist and binaries"
+    cp .build/bin/libarchive.so ../../../scancode-toolkit/src/extractcode/bin/linux-64/lib/libarchive.so
+    echo "Build complete: ScanCode updated with linux-64 binaries"
 
 elif [[ "$os_name" =~ "Darwin" ]]; then
     # assuming that brew is installed
@@ -43,6 +46,7 @@ elif [[ "$os_name" =~ "Darwin" ]]; then
     cp .libs/libarchive.13.dylib .build/bin/libarchive.dylib
     strip .build/bin/*
     echo "Build complete: build contains extra sources for redist and binaries"
+    
 
 elif [[ "$os_name" =~ "MINGW32" ]]; then
     # assuming that mingw-get is installed

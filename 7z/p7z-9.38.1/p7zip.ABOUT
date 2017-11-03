@@ -12,3 +12,4 @@ license: lgpl-2.1 and unrar and brian-gladman-3-clause
 
 notice_file: 7zip.NOTICE
 license_file: lgpl-2.1.LICENSE
+notes: makefile.linux_amd64_asm is used on Linux 64
