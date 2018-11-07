@@ -27,9 +27,15 @@ if echo "$os_name" | grep -q "Linux"; then
     # assuming Debian/Ubuntu Linux
     # sudo apt-get install -y wget build-essential
     build_lib
-    cp bin/7z bin/7z.so ../../../../scancode-toolkit/src/extractcode/bin/linux-64/bin/
-    mkdir -p ../../../../scancode-toolkit/src/extractcode/bin/linux-64/bin/Codecs
-    cp bin/Codecs/Rar29.so ../../../../scancode-toolkit/src/extractcode/bin/linux-64/bin/Codecs
+
+    target_dir=../../../../scancode-toolkit/plugins/extractcode-7z-manylinux1_x86_64/src/extractcode_7z/bin/
+    mkdir -p $target_dir
+    cp bin/7z bin/7z.so $target_dir
+
+    target_dir=../../../../scancode-toolkit/plugins/extractcode-7z-manylinux1_x86_64/src/extractcode_7z/bin/Codecs/
+    mkdir -p $target_dir
+    cp bin/Codecs/Rar29.so $target_dir
+
     echo "Build complete: ScanCode linux-64 updated with binaries"
 
 else

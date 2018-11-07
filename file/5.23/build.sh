@@ -27,8 +27,15 @@ if echo "$os_name" | grep -q "Linux"; then
     # assuming Debian/Ubuntu Linux
     # sudo apt-get install -y wget build-essential
     build_lib
-    cp src/.libs/libmagic.so.1.0.0 ../../../../scancode-toolkit/src/typecode/bin/linux-64/lib/libmagic.so
-    cp magic/magic.mgc ../../../../scancode-toolkit/src/typecode/data/magic/noarch/magic.mgc
+
+    target_dir=scancode-toolkit/plugins/typecode-libmagic-manylinux1_x86_64/src/typecode_libmagic/lib/
+    mkdir -p $target_dir
+    cp src/.libs/libmagic.so.1.0.0 $target_dir/libmagic.so
+
+    target_dir=scancode-toolkit/plugins/typecode-libmagic-manylinux1_x86_64/src/typecode_libmagic/data/
+    mkdir -p $target_dir
+    cp magic/magic.mgc $target_dir
+
     echo "Build complete: ScanCode linux-64 updated with binaries"
 
 else
