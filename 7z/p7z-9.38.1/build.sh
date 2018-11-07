@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # Copyright (c) 2017 nexB Inc. http://www.nexb.com/ - All rights reserved.
 
@@ -23,7 +23,7 @@ function build_lib {
 
 # OS-specific setup and build
 os_name=$(uname -s)
-if [[ "$os_name" =~ "Linux" ]]; then
+if echo "$os_name" | grep -q "Linux"; then
     # assuming Debian/Ubuntu Linux
     # sudo apt-get install -y wget build-essential
     build_lib
