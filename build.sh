@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # Copyright (c) 2017 nexB Inc. http://www.nexb.com/ - All rights reserved.
 #
@@ -18,17 +18,10 @@
 set -e
 
 echo "Building libarchive ..."
-pushd libarchive
-./build.sh
-popd
+(cd libarchive && ./build.sh)
 
 echo "Building 7zip ..."
-pushd 7z/p7z-9.38.1
-./build.sh
-popd
+(cd 7z/p7z-9.38.1 && ./build.sh)
 
 echo "Building libmagic ..."
-pushd file/5.23
-./build.sh
-popd
-
+(cd file/5.23 && ./build.sh)
