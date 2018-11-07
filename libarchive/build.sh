@@ -46,11 +46,11 @@ elif [[ "$os_name" =~ "Darwin" ]]; then
     cp .libs/libarchive.13.dylib .build/bin/libarchive.dylib
     strip .build/bin/*
     echo "Build complete: build contains extra sources for redist and binaries"
-    
+
 
 elif [[ "$os_name" =~ "MINGW32" ]]; then
     # assuming that mingw-get is installed
-    mingw-get install msys-wget liblzma-dev bzip2-dev zlib libiconv-dev 
+    mingw-get install msys-wget liblzma-dev bzip2-dev zlib libiconv-dev
     build_lib
     mkdir -p .build/bin
     cp .libs/libarchive-13.dll build/bin/libarchive.dll

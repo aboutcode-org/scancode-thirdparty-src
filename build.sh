@@ -3,7 +3,7 @@
 # Copyright (c) 2017 nexB Inc. http://www.nexb.com/ - All rights reserved.
 #
 # A simple re/build script for ScanCode thirdparty native deps on Linux
-# Requirements: 
+# Requirements:
 # - a Linux 64bits installation
 # - the scancode requirements in development versions and a toolchain
 #   on RH/Fedora/Centos likely something like:
