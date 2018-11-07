@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 # Copyright (c) 2017 nexB Inc. http://www.nexb.com/ - All rights reserved.
 
@@ -26,7 +26,7 @@ function build_lib {
 
 # OS-specific setup and build
 os_name=$(uname -s)
-if [[ "$os_name" =~ "Linux" ]]; then
+if echo "$os_name" | grep -q "Linux"; then
     # assuming Debian/Ubuntu Linux
     # sudo apt-get install -y wget build-essential zlib1g-dev liblzma-dev libbz2-dev
     build_lib
@@ -36,7 +36,7 @@ if [[ "$os_name" =~ "Linux" ]]; then
     cp .build/bin/libarchive.so ../../../scancode-toolkit/src/extractcode/bin/linux-64/lib/libarchive.so
     echo "Build complete: ScanCode updated with linux-64 binaries"
 
-elif [[ "$os_name" =~ "Darwin" ]]; then
+elif echo "$os_name" | grep -q "Darwin"; then
     # assuming that brew is installed
     brew install git
     brew tap homebrew/homebrew-dupes
@@ -46,11 +46,11 @@ elif [[ "$os_name" =~ "Darwin" ]]; then
     cp .libs/libarchive.13.dylib .build/bin/libarchive.dylib
     strip .build/bin/*
     echo "Build complete: build contains extra sources for redist and binaries"
-    
 
-elif [[ "$os_name" =~ "MINGW32" ]]; then
+
+elif echo "$os_name" | grep -q "MINGW32"; then
     # assuming that mingw-get is installed
-    mingw-get install msys-wget liblzma-dev bzip2-dev zlib libiconv-dev 
+    mingw-get install msys-wget liblzma-dev bzip2-dev zlib libiconv-dev
     build_lib
     mkdir -p .build/bin
     cp .libs/libarchive-13.dll build/bin/libarchive.dll
