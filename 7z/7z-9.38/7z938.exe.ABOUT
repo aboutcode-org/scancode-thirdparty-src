@@ -1,0 +1,31 @@
+about_resource: 7z938.exe
+attribute: true
+checksum_md5: fe5bf952bdf6577ec34ae6f26be28667
+checksum_sha1: 9ac9e5e6a19bf3b18cd7bcbe34a5141996bb3028
+copyright: Copyright (c)  Igor Pavlov.
+description: 7-Zip is a file archiver with the high compression ratio. The program
+    supports 7z, XZ, BZIP2, GZIP, TAR, ZIP, WIM, ARJ, CAB, CHM, CPIO, CramFS, DEB,
+    DMG, FAT, HFS, ISO, LZH, LZMA, MBR, MSI, NSIS, NTFS, RAR, RPM, SquashFS, UDF,
+    VHD, WIM, XAR, Z.
+download_url: http://master.dl.sourceforge.net/project/sevenzip/7-Zip/9.38/7z938.exe
+homepage_url: http://www.7-zip.org/
+license_expression: lgpl-2.1-plus AND unrar AND public-domain
+licenses:
+-   file: lgpl-2.1-plus.LICENSE
+    key: lgpl-2.1-plus
+    name: GNU Lesser General Public License 2.1 or later
+-   file: public-domain.LICENSE
+    key: public-domain
+    name: Public Domain
+-   file: unrar.LICENSE
+    key: unrar
+    name: UnRar License
+name: 7-Zip
+notes: This is a build for Windows 32 bits
+notice_file: 7z938.exe.NOTICE
+notice_url: http://www.7-zip.org/license.txt
+owner: Igor Pavlov
+owner_url: http://ipavlov.users.sourceforge.net/
+redistribute: true
+track_changes: true
+version: '9.38'

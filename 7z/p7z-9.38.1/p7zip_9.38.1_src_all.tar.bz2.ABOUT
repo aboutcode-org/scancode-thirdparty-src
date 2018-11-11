@@ -1,0 +1,30 @@
+about_resource: p7zip_9.38.1_src_all.tar.bz2
+attribute: true
+checksum_md5: 6cba8402ccab2370d3b70c5e28b3d651
+checksum_sha1: 6b1eccf272d8b141a94758f80727ae633568ba69
+copyright: Copyright (c) Igor Pavlov.
+description: "p7zip is a quick port of 7z.exe and 7za.exe (command line version of\
+    \ 7zip, see www.7-zip.org) for Unix.\r\n7-Zip is a file archiver with highest\
+    \ compression ratio."
+download_url: http://master.dl.sourceforge.net/project/p7zip/p7zip/9.38.1/p7zip_9.38.1_src_all.tar.bz2
+homepage_url: http://p7zip.sourceforge.net/
+license_expression: lgpl-2.1-plus AND unrar AND public-domain
+licenses:
+-   file: lgpl-2.1-plus.LICENSE
+    key: lgpl-2.1-plus
+    name: GNU Lesser General Public License 2.1 or later
+-   file: public-domain.LICENSE
+    key: public-domain
+    name: Public Domain
+-   file: unrar.LICENSE
+    key: unrar
+    name: UnRar License
+name: p7zip
+notes: makefile.linux_amd64_asm is used on Linux 64 and makefile.macosx_64bits is
+    used for macOS
+notice_file: p7zip_9.38.1_src_all.tar.bz2.NOTICE
+owner: Igor Pavlov
+owner_url: http://ipavlov.users.sourceforge.net/
+redistribute: true
+track_changes: true
+version: 9.38.1
