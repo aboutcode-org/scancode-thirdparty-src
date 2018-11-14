@@ -30,10 +30,16 @@ if echo "$os_name" | grep -q "Linux"; then
     # assuming Debian/Ubuntu Linux
     # sudo apt-get install -y wget build-essential zlib1g-dev liblzma-dev libbz2-dev
     build_lib
-    mkdir -p .build/bin
-    cp .libs/libarchive.so.13.1.2 .build/bin/libarchive.so
-    strip .build/bin/*
-    cp .build/bin/libarchive.so ../../../scancode-toolkit/src/extractcode/bin/linux-64/lib/libarchive.so
+
+    target_dir=.build/bin
+    mkdir -p $target_dir
+    cp .libs/libarchive.so.13.1.2 $target_dir/libarchive.so
+    strip $target_dir/*
+
+    target_dir=../../../scancode-toolkit/plugins/extractcode-libarchive-manylinux1_x86_64/src/extractcode_libarchive/lib/
+    mkdir -p $target_dir
+    cp .build/bin/libarchive.so $target_dir
+
     echo "Build complete: ScanCode updated with linux-64 binaries"
 
 elif echo "$os_name" | grep -q "Darwin"; then
